@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import styled, { keyframes } from "styled-components"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faInstagram } from "@fortawesome/free-brands-svg-icons"
 
 const url = ".netlify/functions/getInstagramPosts"
 
@@ -101,7 +103,8 @@ const IndexPage = () => {
                 }}
               ></p>
               <a href={gram.url}>
-                {/* <img src={gram.thumbnail} alt={gram.caption} />{" "} */}Link
+                {/* <img src={gram.thumbnail} alt={gram.caption} />{" "} */}{" "}
+                <FontAwesomeIcon icon={faInstagram} />
               </a>
             </div>
           </Gram>

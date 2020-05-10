@@ -7,11 +7,11 @@ const cache = {
 }
 
 async function getPosts() {
-  // const timeSinceLastFetch = Date.now() - cache.lastFetch
-  // if (timeSinceLastFetch <= 1800000) {
-  //   console.log("cached")
-  //   return cache.posts
-  // }
+  const timeSinceLastFetch = Date.now() - cache.lastFetch
+  if (timeSinceLastFetch <= 1800000) {
+    console.log("cached")
+    return cache.posts
+  }
   const data = await fetch(url).then(res => res.json())
   const posts = slimUpPosts(data)
   // const posts = data
