@@ -4,6 +4,7 @@ import SEO from "../components/seo"
 import styled from "styled-components"
 
 import IndividualGram from "../components/Gram"
+import InstaModal from "../components/InstaModal"
 
 const url = ".netlify/functions/getInstagramPosts"
 

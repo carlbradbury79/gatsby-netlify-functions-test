@@ -29,6 +29,10 @@ const IndividualGram = styled.div`
     overflow: hidden;
     color: #fff;
 
+    :hover {
+      cursor: pointer;
+    }
+
     a {
       color: #fff;
       position: absolute;
@@ -42,9 +46,9 @@ const IndividualGram = styled.div`
 const Gram = ({ gram }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const transitions = useTransition(modalVisible, null, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    from: { opacity: 0, transform: "translateY(-40px)" },
+    enter: { opacity: 1, transform: "translateY(0px)" },
+    leave: { opacity: 0, transform: "translateY(-40px)" },
   })
 
   return (
