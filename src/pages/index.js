@@ -4,6 +4,9 @@ import SEO from "../components/seo"
 import styled, { keyframes } from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faInstagram } from "@fortawesome/free-brands-svg-icons"
+import Modal from "../components/Modal"
+import { useTransition } from "react-spring"
+import InstaOverlay from "../components/InstaOverlay"
 
 const url = ".netlify/functions/getInstagramPosts"
 
@@ -21,6 +24,7 @@ const GramContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  z-index: 50;
 
   @media (max-width: 400px) {
     flex-direction: column;
@@ -65,6 +69,7 @@ const Gram = styled.div`
   :hover div {
     opacity: 1;
     animation: ${fadeIn} 0.3s linear;
+    cursor: pointer;
   }
 `
 
@@ -85,14 +90,40 @@ function useInstagram() {
 const IndexPage = () => {
   const gramz = useInstagram()
 
+  const [gramForModal, setGramForModel] = useState(false)
+
+  const [modalVisible, setModalVisible] = useState(false)
+  const transitions = useTransition(modalVisible, null, {
+    from: { opacity: 0, transform: "translateY(-40px)" },
+    enter: { opacity: 1, transform: "translateY(0px)" },
+    leave: { opacity: 0, transform: "translateY(-40px)" },
+  })
+
+  function getGram(id) {
+    const newGram = gramz.filter(g => {
+      console.log("getGram", id, g.id)
+      return g.id === id
+    })
+    console.log("newGram", newGram)
+    setGramForModel(newGram)
+    console.log("state", gramForModal)
+    setModalVisible(true)
+  }
+
   console.log(gramz)
   return (
     <Layout>
       <SEO title="Home" />
       <h1>Netlify/Gatsby Functions Test</h1>
+
       <GramContainer>
         {gramz.map(gram => (
-          <Gram key={gram.id} bg={gram.thumbnail}>
+          <Gram
+            key={gram.id}
+            bg={gram.thumbnail}
+            // onClick={() => setModalVisible(true)}
+            onClick={() => getGram(gram.id)}
+          >
             <div>
               <p
                 dangerouslySetInnerHTML={{
@@ -110,6 +141,18 @@ const IndexPage = () => {
           </Gram>
         ))}
       </GramContainer>
+      {transitions.map(
+        ({ item, key, props: style }) =>
+          item && (
+            <Modal
+              style={style}
+              closeModal={() => setModalVisible(false)}
+              key={key}
+              gram={gramForModal}
+            />
+          )
+      )}
+      {modalVisible && <InstaOverlay />}
     </Layout>
   )
 }
