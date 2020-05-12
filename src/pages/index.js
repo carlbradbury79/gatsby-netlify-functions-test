@@ -138,6 +138,8 @@ const IndexPage = () => {
           </Gram>
         ))}
       </GramContainer>
+
+      {/* Display Modal */}
       {transitions.map(
         ({ item, key, props: style }) =>
           item && (
@@ -149,6 +151,8 @@ const IndexPage = () => {
             />
           )
       )}
+
+      {/* Modal visibility controls the overlay */}
       {modalVisible && <InstaOverlay />}
     </Layout>
   )
