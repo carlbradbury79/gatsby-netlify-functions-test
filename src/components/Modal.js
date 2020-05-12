@@ -14,17 +14,31 @@ const InstaModal = styled(animated.div)`
   padding: 40px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  position: absolute;
+  position: fixed;
   z-index: 90;
   top: calc(10%);
   left: calc(50% - 400px);
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+
+  @media (max-width: 500px) {
+    left: 10px;
+    right: 10px;
+    top: 10px;
+    bottom: 10px;
+    padding: 1rem;
+    margin: 0 auto;
+  }
 
   .grid {
     display: grid;
     grid-template-columns: 300px 300px;
     column-gap: 10px;
+
+    @media (max-width: 600px) {
+      grid-template-columns: 300px;
+    }
   }
 
   .modal-close-button {
@@ -64,39 +78,41 @@ const Modal = ({ style, closeModal, gram }) => {
           </h3>
           <div className="grid">
             <img src={gram[0].thumbnail} />
-            <div
-              dangerouslySetInnerHTML={{
-                __html: anchorme({
-                  input: gram[0].caption,
-                  // use some options
-                  options: {
-                    attributes: {
-                      target: "_blank",
-                      class: "detected",
+            <div>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: anchorme({
+                    input: gram[0].caption,
+                    // use some options
+                    options: {
+                      attributes: {
+                        target: "_blank",
+                        class: "detected",
+                      },
                     },
-                  },
-                  // and extensions
-                  extensions: [
-                    // an extension for hashtag search
-                    {
-                      test: /#(\w|_)+/gi,
-                      transform: string =>
-                        `<a href="https://www.instagram.com/explore/tags/${string.substr(
-                          1
-                        )}">${string}</a>`,
-                    },
-                    // an extension for mentions
-                    {
-                      test: /@(\w|_)+/gi,
-                      transform: string =>
-                        `<a href="https://www.instagram.com/${string.substr(
-                          1
-                        )}">${string}</a>`,
-                    },
-                  ],
-                }),
-              }}
-            />
+                    // and extensions
+                    extensions: [
+                      // an extension for hashtag search
+                      {
+                        test: /#(\w|_)+/gi,
+                        transform: string =>
+                          `<a href="https://www.instagram.com/explore/tags/${string.substr(
+                            1
+                          )}">${string}</a>`,
+                      },
+                      // an extension for mentions
+                      {
+                        test: /@(\w|_)+/gi,
+                        transform: string =>
+                          `<a href="https://www.instagram.com/${string.substr(
+                            1
+                          )}">${string}</a>`,
+                      },
+                    ],
+                  }),
+                }}
+              />
+            </div>
           </div>
           <a className="modal-close-button" href={gram[0].url}>
             <FontAwesomeIcon icon={faInstagram} /> Read on Instagram

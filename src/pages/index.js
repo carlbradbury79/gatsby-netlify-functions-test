@@ -27,20 +27,20 @@ const GramContainer = styled.div`
   z-index: 50;
 
   @media (max-width: 400px) {
-    flex-direction: column;
     width: 100%;
   }
 `
 
 const Gram = styled.div`
   background: url(${props => props.bg});
-
   background-size: cover;
   position: relative;
-  height: 300px;
+  height: calc(100vw / 5);
+  flex-basis: 20%;
 
-  @media (min-width: 400px) {
-    flex: 1;
+  @media (max-width: 400px) {
+    flex-basis: 50%;
+    height: 150px;
   }
 
   div {
@@ -55,16 +55,11 @@ const Gram = styled.div`
     opacity: 0;
     overflow: hidden;
     color: #fff;
-
-    a {
-      color: #fff;
-      position: absolute;
-      bottom: 20px;
-      text-decoration: none;
-      left: 50%;
-      -webkit-transform: translateX(-50%);
-      transform: translateX(-50%);
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
   :hover div {
     opacity: 1;
@@ -90,15 +85,20 @@ function useInstagram() {
 const IndexPage = () => {
   const gramz = useInstagram()
 
+  // The currently selected instagram photo object
   const [gramForModal, setGramForModel] = useState(false)
 
+  // Is the modal visible
   const [modalVisible, setModalVisible] = useState(false)
+
+  // Animation
   const transitions = useTransition(modalVisible, null, {
     from: { opacity: 0, transform: "translateY(-40px)" },
     enter: { opacity: 1, transform: "translateY(0px)" },
     leave: { opacity: 0, transform: "translateY(-40px)" },
   })
 
+  // Get the clicked instagram photo and set gramForModal
   function getGram(id) {
     const newGram = gramz.filter(g => {
       console.log("getGram", id, g.id)
@@ -125,6 +125,7 @@ const IndexPage = () => {
             onClick={() => getGram(gram.id)}
           >
             <div>
+              <FontAwesomeIcon icon={faInstagram} />
               <p
                 dangerouslySetInnerHTML={{
                   __html:
@@ -133,10 +134,6 @@ const IndexPage = () => {
                       : gram.caption,
                 }}
               ></p>
-              <a href={gram.url}>
-                {/* <img src={gram.thumbnail} alt={gram.caption} />{" "} */}{" "}
-                <FontAwesomeIcon icon={faInstagram} />
-              </a>
             </div>
           </Gram>
         ))}
