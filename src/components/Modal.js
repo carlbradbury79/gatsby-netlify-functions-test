@@ -7,26 +7,25 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons"
 import anchorme from "anchorme"
 
 const InstaModal = styled(animated.div)`
-  max-width: 800px;
   /* height: 100%; */
   color: gray;
   background: #fff;
-  padding: 40px;
+  padding: 2rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   position: fixed;
   z-index: 90;
   top: calc(10%);
-  left: calc(50% - 400px);
+  left: calc(50% - 350px);
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  align-items: center;
 
-  @media (max-width: 500px) {
+  @media (max-width: 800px) {
     left: 10px;
     right: 10px;
     top: 10px;
-    bottom: 10px;
     padding: 1rem;
     margin: 0 auto;
   }
@@ -36,11 +35,26 @@ const InstaModal = styled(animated.div)`
     grid-template-columns: 300px 300px;
     column-gap: 10px;
 
+    .insta-text p a {
+      text-decoration: none;
+    }
+
     @media (max-width: 600px) {
       grid-template-columns: 300px;
     }
   }
+`
 
+const InstaButtons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: space-between;
+  width: 100%;
+
+  @media (max-width: 420px) {
+    flex-direction: column;
+  }
   .modal-close-button {
     padding: 16px;
     background-color: #fff;
@@ -73,12 +87,12 @@ const Modal = ({ style, closeModal, gram }) => {
         }}
       >
         <InstaModal style={style} className="modal">
-          <h3 className="modal-title">
-            <FontAwesomeIcon icon={faInstagram} /> Friesland School
-          </h3>
           <div className="grid">
             <img src={gram[0].thumbnail} />
-            <div>
+            <div className="insta-text">
+              <h5 className="modal-title">
+                <FontAwesomeIcon icon={faInstagram} /> Friesland School
+              </h5>
               <p
                 dangerouslySetInnerHTML={{
                   __html: anchorme({
@@ -114,12 +128,14 @@ const Modal = ({ style, closeModal, gram }) => {
               />
             </div>
           </div>
-          <a className="modal-close-button" href={gram[0].url}>
-            <FontAwesomeIcon icon={faInstagram} /> Read on Instagram
-          </a>
-          <button className="modal-close-button" onClick={closeModal}>
-            Close
-          </button>
+          <InstaButtons>
+            <a className="modal-close-button" href={gram[0].url}>
+              <FontAwesomeIcon icon={faInstagram} /> Read on Instagram
+            </a>
+            <button className="modal-close-button" onClick={closeModal}>
+              Close
+            </button>
+          </InstaButtons>
         </InstaModal>
       </OutsideClickHandler>
     </>

@@ -38,9 +38,9 @@ const Gram = styled.div`
   height: calc(100vw / 5);
   flex-basis: 20%;
 
-  @media (max-width: 400px) {
+  @media (max-width: 800px) {
     flex-basis: 50%;
-    height: 150px;
+    height: calc(100vw / 2);
   }
 
   div {
@@ -130,7 +130,7 @@ const IndexPage = () => {
                 dangerouslySetInnerHTML={{
                   __html:
                     gram.caption.length > 150
-                      ? gram.caption.slice(0, 150) + "..."
+                      ? gram.caption.slice(0, 100) + "..."
                       : gram.caption,
                 }}
               ></p>
