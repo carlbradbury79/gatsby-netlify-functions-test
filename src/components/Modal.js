@@ -58,10 +58,11 @@ const InstaButtons = styled.div`
   .modal-close-button {
     padding: 16px;
     background-color: #fff;
-    color: #6929c4;
+    color: var(--primary);
     font-size: 1em;
-    border: none;
-    margin-top: 16px;
+    border: 1px solid var(--primary);
+    margin: 16px 10px 0 10px;
+
     width: 90%;
     text-align: center;
     text-decoration: none;
@@ -72,7 +73,8 @@ const InstaButtons = styled.div`
 
   .modal-close-button:hover,
   .modal-close-button:focus {
-    background-color: #e8daff;
+    background-color: var(--primary);
+    color: #fff;
   }
 `
 

@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import styled, { keyframes } from "styled-components"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faInstagram } from "@fortawesome/free-brands-svg-icons"
+import styled from "styled-components"
+import Gram from "../components/Instagram"
 import Modal from "../components/Modal"
 import { useTransition } from "react-spring"
 import InstaOverlay from "../components/InstaOverlay"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faInstagram } from "@fortawesome/free-brands-svg-icons"
 
+// Location of Serverless function "getInstagramPosts"
 const url = ".netlify/functions/getInstagramPosts"
 
-const fadeIn = keyframes`
-from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`
-
+// Instagram Container
 const GramContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -30,44 +23,7 @@ const GramContainer = styled.div`
     width: 100%;
   }
 `
-
-const Gram = styled.div`
-  background: url(${props => props.bg});
-  background-size: cover;
-  position: relative;
-  height: calc(100vw / 5);
-  flex-basis: 20%;
-
-  @media (max-width: 800px) {
-    flex-basis: 50%;
-    height: calc(100vw / 2);
-  }
-
-  div {
-    position: absolute;
-    padding: 1rem;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 50px;
-    background: rgba(33, 79, 149, 0.8);
-    opacity: 0;
-    overflow: hidden;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  :hover div {
-    opacity: 1;
-    animation: ${fadeIn} 0.3s linear;
-    cursor: pointer;
-  }
-`
-
+// Get Instagram Posts
 function useInstagram() {
   const [posts, setPosts] = useState([])
 
@@ -114,7 +70,9 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <h1>Netlify/Gatsby Functions Test</h1>
+      <h1 style={{ textAlign: "center", marginTop: "20px" }}>
+        <FontAwesomeIcon icon={faInstagram} /> Friesland School
+      </h1>
 
       <GramContainer>
         {gramz.map(gram => (
@@ -122,20 +80,10 @@ const IndexPage = () => {
             key={gram.id}
             bg={gram.thumbnail}
             // onClick={() => setModalVisible(true)}
-            onClick={() => getGram(gram.id)}
-          >
-            <div>
-              <FontAwesomeIcon icon={faInstagram} />
-              <p
-                dangerouslySetInnerHTML={{
-                  __html:
-                    gram.caption.length > 150
-                      ? gram.caption.slice(0, 100) + "..."
-                      : gram.caption,
-                }}
-              ></p>
-            </div>
-          </Gram>
+            // onClick={() => getGram(gram.id)}
+            getGram={getGram}
+            gram={gram}
+          />
         ))}
       </GramContainer>
 
