@@ -4,6 +4,7 @@ import styled from "styled-components"
 import OutsideClickHandler from "react-outside-click-handler"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faInstagram } from "@fortawesome/free-brands-svg-icons"
+import anchorme from "anchorme"
 
 const InstaModal = styled(animated.div)`
   max-width: 800px;
@@ -34,6 +35,8 @@ const InstaModal = styled(animated.div)`
     border: none;
     margin-top: 16px;
     width: 90%;
+    text-align: center;
+    text-decoration: none;
     align-self: center;
     cursor: pointer;
     transition: background-color 0.1s linear;
@@ -56,16 +59,48 @@ const Modal = ({ style, closeModal, gram }) => {
         }}
       >
         <InstaModal style={style} className="modal">
-          <h3 className="modal-title">Modal title</h3>
+          <h3 className="modal-title">
+            <FontAwesomeIcon icon={faInstagram} /> Friesland School
+          </h3>
           <div className="grid">
             <img src={gram[0].thumbnail} />
-            <div>
-              <p className="modal-content">{gram[0].caption}</p>
-              <p>
-                <a href={gram[0].url}>Read on the gram</a>
-              </p>
-            </div>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: anchorme({
+                  input: gram[0].caption,
+                  // use some options
+                  options: {
+                    attributes: {
+                      target: "_blank",
+                      class: "detected",
+                    },
+                  },
+                  // and extensions
+                  extensions: [
+                    // an extension for hashtag search
+                    {
+                      test: /#(\w|_)+/gi,
+                      transform: string =>
+                        `<a href="https://www.instagram.com/explore/tags/${string.substr(
+                          1
+                        )}">${string}</a>`,
+                    },
+                    // an extension for mentions
+                    {
+                      test: /@(\w|_)+/gi,
+                      transform: string =>
+                        `<a href="https://www.instagram.com/${string.substr(
+                          1
+                        )}">${string}</a>`,
+                    },
+                  ],
+                }),
+              }}
+            />
           </div>
+          <a className="modal-close-button" href={gram[0].url}>
+            <FontAwesomeIcon icon={faInstagram} /> Read on Instagram
+          </a>
           <button className="modal-close-button" onClick={closeModal}>
             Close
           </button>
