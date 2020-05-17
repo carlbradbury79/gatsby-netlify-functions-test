@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import Layout from "./layout"
 import styled from "styled-components"
 import Gram from "./Instagram"
 import Modal from "./Modal"
