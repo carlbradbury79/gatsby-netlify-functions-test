@@ -56,25 +56,27 @@ const InstaButtons = styled.div`
     flex-direction: column;
   }
   .modal-close-button {
-    padding: 16px;
-    background-color: #fff;
+    background: #fff;
     color: var(--primary);
-    font-size: 1em;
-    border: 1px solid var(--primary);
-    margin: 16px 10px 0 10px;
-
-    width: 90%;
+    border: 2px solid var(--primary);
+    padding: 10px 20px;
+    display: block;
+    margin: auto;
+    width: 250px;
     text-align: center;
-    text-decoration: none;
+    margin-bottom: 4rem;
     align-self: center;
     cursor: pointer;
+    text-decoration: none;
     transition: background-color 0.1s linear;
   }
 
   .modal-close-button:hover,
   .modal-close-button:focus {
-    background-color: var(--primary);
+    background: var(--primary);
     color: #fff;
+    border: 2px solid #fff;
+    text-decoration: none;
   }
 `
 
