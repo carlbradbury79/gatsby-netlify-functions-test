@@ -26,6 +26,7 @@ const InstaModal = styled(animated.div)`
     left: 10px;
     right: 10px;
     top: 10px;
+    bottom: 10px;
     padding: 1rem;
     margin: 0 auto;
   }
@@ -64,7 +65,7 @@ const InstaButtons = styled.div`
     margin: auto;
     width: 250px;
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
     align-self: center;
     cursor: pointer;
     text-decoration: none;
